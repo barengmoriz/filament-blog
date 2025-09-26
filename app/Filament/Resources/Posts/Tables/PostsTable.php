@@ -10,12 +10,19 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PostsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('user_id', auth()->id())
+                ->orWhere(function ($query) {
+                    if(auth()->user()->canAny(['Post View', 'Post Edit', 'Post Delete'])) {
+                        $query->where('user_id', '!=', auth()->user()->id);
+                    }
+                }))
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
