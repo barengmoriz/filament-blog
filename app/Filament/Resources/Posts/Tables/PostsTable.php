@@ -20,7 +20,7 @@ class PostsTable
             ->modifyQueryUsing(fn(Builder $query) => $query->where('user_id', auth()->id())
                 ->orWhere(function ($query) {
                     if(auth()->user()->canAny(['Post View', 'Post Edit', 'Post Delete'])) {
-                        $query->where('user_id', '!=', auth()->user()->id);
+                        $query->where('user_id', '!=', auth()->id());
                     }
                 }))
             ->columns([
@@ -38,6 +38,9 @@ class PostsTable
                 TextColumn::make('tags.name')
                     ->badge()
                     ->color('info')
+                    ->searchable(),
+                TextColumn::make('status')
+                    ->badge()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
