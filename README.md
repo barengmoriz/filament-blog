@@ -1,4 +1,4 @@
-## Laravel Blog
+## Laravel Filament Blog
 
 Belajar membuat Blog menggunakan Laravel Filament.
 Dibuat oleh Moriz.
@@ -37,8 +37,8 @@ Youtube Bareng Moriz : https://www.youtube.com/@barengmoriz.
 -   Tambah Data User
 -   Edit Data User
 -   Hapus Data User
--   Atur Peran
--   Atur Hak Akses
+-   Atur Role
+-   Atur Permission
 
 ### 5. Permission
 
