@@ -17,12 +17,12 @@ class PostsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) => $query->where('user_id', auth()->id())
-                ->orWhere(function ($query) {
-                    if(auth()->user()->canAny(['Post View', 'Post Edit', 'Post Delete'])) {
-                        $query->where('user_id', '!=', auth()->id());
+            ->modifyQueryUsing(fn(Builder $query) => $query->where(function ($query) {
+                    if(!auth()->user()->canAny(['Post View', 'Post Edit', 'Post Delete'])) {
+                        $query->where('user_id', auth()->id());
                     }
-                }))
+                })
+                ->latest())
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
